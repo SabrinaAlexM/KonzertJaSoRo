@@ -99,7 +99,8 @@ body{
   border-radius:50%; animation:turn 80s linear infinite;
 }
 .soul .sun{
-  position:absolute; left:50%; bottom:-40cqmin; width:120cqmin; height:120cqmin; margin-left:-60cqmin; border-radius:50%;
+  --d:min(78cqw, 48cqh);
+  position:absolute; left:50%; bottom:calc(var(--d) * -.32); width:var(--d); height:var(--d); margin-left:calc(var(--d) / -2); border-radius:50%;
   background:linear-gradient(180deg, #ffd166, #ff7b2c 60%, #e0402b);
   -webkit-mask:linear-gradient(180deg,#000 0 40%,transparent 40% 43%,#000 43% 52%,transparent 52% 56%,#000 56% 63%,transparent 63% 68%,#000 68%);
           mask:linear-gradient(180deg,#000 0 40%,transparent 40% 43%,#000 43% 52%,transparent 52% 56%,#000 56% 63%,transparent 63% 68%,#000 68%);
@@ -127,24 +128,36 @@ body{
 @keyframes flash{ 0%,100%{ opacity:1; } 6%{ opacity:.25; } 9%{ opacity:1; } 52%{ opacity:.5; } 55%{ opacity:1; } }
 @keyframes grain{ 0%{ transform:translate(0,0); } 33%{ transform:translate(-4%,3%); } 66%{ transform:translate(3%,-4%); } }
 
-/* Auflösung in JaSoRo-Farben */
+/* Auflösung: animiert in JaSoRo-Grün und Schwarz */
 .s-reveal{ background:var(--jg-black); }
-.stripes i{ position:absolute; top:0; bottom:0; background:var(--jg-green); transform:translateY(-100%); transition:transform 1s cubic-bezier(.2,.7,.2,1); }
-.stripes i:nth-child(1){ left:0; width:3cqw; }
-.stripes i:nth-child(2){ left:5cqw; width:1.2cqw; transition-delay:.12s; }
-.stripes i:nth-child(3){ right:0; width:3cqw; transform:translateY(100%); transition-delay:.24s; }
-.s-reveal.active .stripes i{ transform:none; }
-.s-reveal .brand{ font-family:"Montserrat","Century Gothic",Arial,sans-serif; font-weight:800; font-size:min(22cqw, 14cqh); color:var(--jg-green); letter-spacing:-.01em; }
-.s-reveal .kicker{ margin:0 0 2.5cqh; font:500 min(5cqw, 3cqh) "Montserrat","Century Gothic",Arial,sans-serif; color:rgba(255,255,255,.75); }
-.s-reveal .styles{ margin:2cqh 0 0; font:800 min(5.2cqw, 3.2cqh) "Montserrat","Century Gothic",Arial,sans-serif; color:#fff; }
+.bands{ position:absolute; inset:-5% -45%; display:grid; grid-template-columns:repeat(3,1fr); gap:1.5cqw; transform:skewX(-12deg); }
+.bands > div{ position:relative; overflow:hidden; transform:translateY(100%); transition:transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.bands > div:nth-child(2){ transform:translateY(-100%); }
+.s-reveal.active .bands > div{ transform:none; }
+.s-reveal.active .bands > div:nth-child(2){ transition-delay:.15s; }
+.s-reveal.active .bands > div:nth-child(3){ transition-delay:.3s; }
+.mono.jazz,.mono.soul,.mono.rock{ background:var(--jg-black); }
+.mono.jazz .beam{ background:linear-gradient(180deg, rgba(123,187,93,.5), rgba(123,187,93,0) 85%); }
+.mono.jazz .smoke{ background:radial-gradient(circle, rgba(123,187,93,.18), transparent 65%); }
+.mono.soul .rays{ background:repeating-conic-gradient(from 0deg, rgba(123,187,93,.12) 0 5deg, transparent 5deg 12deg); }
+.mono.soul .sun{ background:linear-gradient(180deg, #a9dc90, var(--jg-green) 60%, #4e8a37); box-shadow:0 0 14cqmin rgba(123,187,93,.45); }
+.mono.rock .lights i,.mono.rock .lights i:nth-child(2){ background:linear-gradient(180deg, rgba(123,187,93,.6), rgba(123,187,93,0) 75%); }
+.s-reveal .veil{ position:absolute; inset:0; z-index:1; background:radial-gradient(ellipse at 50% 48%, rgba(13,13,13,.85) 0%, rgba(13,13,13,.45) 60%, rgba(13,13,13,.6) 100%); }
+.s-reveal .word{ font-size:min(26cqw, 16cqh); }
+.g-jazz{ font-family:"Limelight",Georgia,serif; color:var(--jg-green); text-shadow:0 0 .12em rgba(123,187,93,.6); }
+.g-soul{ font-family:"Shrikhand",Georgia,serif; color:var(--jg-green); text-shadow:.04em .04em 0 #2f5a22; }
+.g-rock{ font-family:"Anton",Impact,sans-serif; font-size:1.18em; color:var(--jg-green); text-shadow:.03em .03em 0 #2f5a22; }
+.s-reveal .kicker{ margin:0 0 2.5cqh; font:700 min(5cqw, 3cqh) "Archivo Narrow",Arial,sans-serif; color:rgba(255,255,255,.8); letter-spacing:.03em; }
+.s-reveal .styles{ margin:2.5cqh 0 0; font:700 min(5.4cqw, 3.4cqh) "Archivo Narrow",Arial,sans-serif; color:#fff; }
 .s-reveal .date{
-  margin:6cqh 10cqw 0; padding:2.4cqh 5cqw; border-radius:2cqh; border:2px solid var(--jg-green);
-  font:500 min(4.6cqw, 2.9cqh)/1.35 "Montserrat","Century Gothic",Arial,sans-serif; color:#fff;
+  margin:6cqh 7cqw 0; padding:2.4cqh 5cqw; border-radius:2cqh;
+  background:rgba(13,13,13,.7); border:2px solid var(--jg-green);
+  font:500 min(5cqw, 3.1cqh)/1.3 "Archivo Narrow",Arial,sans-serif; color:#fff;
 }
-.s-reveal .date b{ display:block; font-weight:800; font-size:1.3em; margin-top:.6cqh; color:var(--jg-green); }
+.s-reveal .date b{ display:block; font-weight:700; font-size:1.35em; margin-top:.4cqh; color:var(--jg-green); }
 .replay{
   margin-top:4cqh; min-height:44px; padding:0 6cqw; border-radius:999px; cursor:pointer;
-  font:800 min(4.2cqw, 2.7cqh) "Montserrat","Century Gothic",Arial,sans-serif;
+  font:700 min(4.4cqw, 2.8cqh) "Archivo Narrow",Arial,sans-serif;
   color:var(--jg-black); background:var(--jg-green); border:0;
 }
 .replay:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
@@ -152,7 +165,7 @@ body{
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{ animation-duration:.01s !important; animation-iteration-count:1 !important; }
   .bars span.run i{ animation-duration:var(--dur,4s) !important; }
-  .slide,.slide .in,.stripes i{ transition-duration:.01s !important; transition-delay:0s !important; }
+  .slide,.slide .in,.bands > div{ transition-duration:.01s !important; transition-delay:0s !important; }
 }
 </style>
 </head>
@@ -181,9 +194,14 @@ body{
   </section>
 
   <section class="slide s-reveal" data-dur="0">
-    <div class="stripes" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="bands" aria-hidden="true">
+      <div><div class="world jazz mono"><div class="beam"></div><div class="smoke s1"></div></div></div>
+      <div><div class="world soul mono"><div class="rays"></div><div class="sun"></div></div></div>
+      <div><div class="world rock mono"><div class="lights"><i></i><i></i><i></i></div><div class="grain"></div></div></div>
+    </div>
+    <div class="veil"></div>
     <p class="kicker in">Unser Motto</p>
-    <h1 class="word brand in late">JaSoRo</h1>
+    <h1 class="word in late"><span class="g-jazz">Ja</span><span class="g-soul">So</span><span class="g-rock">Ro</span></h1>
     <p class="styles in late">Jazz. Soul. Rock.</p>
     <p class="date in later">Wir freuen uns aufs Konzertwochenende<b>18. und 19. September 2027</b></p>
     <button class="replay in later" id="replay" type="button">Nochmals ansehen</button>
